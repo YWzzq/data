@@ -69,6 +69,11 @@ const router = createRouter({
       component: () => import('../views/DataCleaningView.vue')
     },
     {
+      path: '/about',
+      name: 'about',
+      component: () => import('../views/AboutView.vue')
+    },
+    {
       path: '/data-generation',
       name: 'data-generation',
       component: () => import('../views/DataGenerationView.vue'),
@@ -81,7 +86,7 @@ const router = createRouter({
         {
           path: 'general/create',
           name: 'create-general-generation',
-          component: () => import('../views/generation/CreateGenerationView.vue')
+          component: () => import('../views/generation/GeneralGenerationCreateView.vue')
         },
         {
           path: 'general/:id',
@@ -101,7 +106,7 @@ const router = createRouter({
         {
           path: 'finetune/create',
           name: 'create-finetune-generation',
-          component: () => import('../views/generation/CreateGenerationView.vue')
+          component: () => import('../views/generation/FinetuneGenerationCreateView.vue')
         },
         {
           path: 'finetune/:id',
