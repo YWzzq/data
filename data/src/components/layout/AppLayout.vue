@@ -84,6 +84,11 @@
             <el-menu-item index="/data-deduplication">数据去重</el-menu-item>
             <el-menu-item index="/data-disambiguation">数据消歧</el-menu-item>
           </el-sub-menu>
+
+          <el-menu-item index="/about">
+            <el-icon><InfoFilled /></el-icon>
+            <span>关于我们</span>
+          </el-menu-item>
         </el-menu>
       </aside>
 
@@ -106,7 +111,8 @@ import {
   MagicStick, 
   Search, 
   Bell, 
-  QuestionFilled 
+  QuestionFilled,
+  InfoFilled
 } from '@element-plus/icons-vue'
 </script>
 
