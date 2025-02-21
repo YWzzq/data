@@ -25,6 +25,13 @@
       </div>
     </div>
 
+    <!-- 步骤引导 -->
+    <StepGuide
+      title="数据集管理功能引导"
+      :steps="guideSteps"
+      pageKey="dataset_management"
+    />
+
     <!-- 数据集列表 - 表格视图 -->
     <el-card v-if="viewMode === 'table'" class="mt-20">
       <template #header>
@@ -157,6 +164,7 @@ import {
   Grid,
   List
 } from '@element-plus/icons-vue'
+import StepGuide from '@/components/common/StepGuide.vue'
 
 const router = useRouter()
 
@@ -263,6 +271,65 @@ const deleteDataset = (dataset) => {
     }
   }).catch(() => {})
 }
+
+// 引导步骤配置
+const guideSteps = [
+  {
+    title: '创建数据集',
+    description: '创建新的数据集',
+    icon: 'Plus',
+    content: `
+      <p>创建数据集的方式：</p>
+      <ul>
+        <li>从本地文件导入（支持Excel、TXT等格式）</li>
+        <li>从数据源导入</li>
+        <li>手动创建并添加数据</li>
+      </ul>
+    `
+  },
+  {
+    title: '数据集配置',
+    description: '配置数据集基本信息',
+    icon: 'Setting',
+    content: `
+      <p>配置数据集的基本属性：</p>
+      <ul>
+        <li>设置数据集名称和描述</li>
+        <li>选择数据类型（文本、图像等）</li>
+        <li>配置标注类型和模板</li>
+        <li>设置存储位置和权限</li>
+      </ul>
+    `
+  },
+  {
+    title: '数据管理',
+    description: '管理数据集内容',
+    icon: 'Document',
+    content: `
+      <p>数据集创建后，您可以：</p>
+      <ul>
+        <li>预览和编辑数据内容</li>
+        <li>添加或删除数据</li>
+        <li>进行数据清洗</li>
+        <li>导出数据集</li>
+      </ul>
+    `
+  },
+  {
+    title: '版本控制',
+    description: '管理数据集版本',
+    icon: 'Timer',
+    content: `
+      <p>数据集版本管理功能：</p>
+      <ul>
+        <li>创建数据集快照</li>
+        <li>回滚到历史版本</li>
+        <li>比较不同版本</li>
+        <li>导出特定版本</li>
+      </ul>
+    `
+  }
+]
 </script>
 
 <style scoped>

@@ -77,51 +77,44 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/data-generation',
-      name: 'data-generation',
-      component: () => import('../views/DataGenerationView.vue'),
-      children: [
-        {
-          path: 'general',
-          name: 'general-generation',
-          component: () => import('../views/generation/GeneralGenerationView.vue')
-        },
-        {
-          path: 'general/create',
-          name: 'create-general-generation',
-          component: () => import('../views/generation/GeneralGenerationCreateView.vue')
-        },
-        {
-          path: 'general/:id',
-          name: 'general-generation-detail',
-          component: () => import('../views/generation/GenerationDetailView.vue')
-        },
-        {
-          path: 'general/:id/edit',
-          name: 'edit-general-generation',
-          component: () => import('../views/generation/EditGenerationView.vue')
-        },
-        {
-          path: 'finetune',
-          name: 'finetune-generation',
-          component: () => import('../views/generation/FinetuneGenerationView.vue')
-        },
-        {
-          path: 'finetune/create',
-          name: 'create-finetune-generation',
-          component: () => import('../views/generation/FinetuneGenerationCreateView.vue')
-        },
-        {
-          path: 'finetune/:id',
-          name: 'finetune-generation-detail',
-          component: () => import('../views/generation/GenerationDetailView.vue')
-        },
-        {
-          path: 'finetune/:id/edit',
-          name: 'edit-finetune-generation',
-          component: () => import('../views/generation/EditGenerationView.vue')
-        }
-      ]
+      path: '/data-generation/general',
+      name: 'general-generation',
+      component: () => import('../views/generation/GeneralGenerationView.vue')
+    },
+    {
+      path: '/data-generation/general/create',
+      name: 'create-general-generation',
+      component: () => import('../views/generation/GeneralGenerationCreateView.vue')
+    },
+    {
+      path: '/data-generation/general/:id',
+      name: 'general-generation-detail',
+      component: () => import('../views/generation/GenerationDetailView.vue')
+    },
+    {
+      path: '/data-generation/general/:id/edit',
+      name: 'edit-general-generation',
+      component: () => import('../views/generation/EditGenerationView.vue')
+    },
+    {
+      path: '/data-generation/finetune',
+      name: 'finetune-generation',
+      component: () => import('../views/generation/FinetuneGenerationView.vue')
+    },
+    {
+      path: '/data-generation/finetune/create',
+      name: 'create-finetune-generation',
+      component: () => import('../views/generation/FinetuneGenerationCreateView.vue')
+    },
+    {
+      path: '/data-generation/finetune/:id',
+      name: 'finetune-generation-detail',
+      component: () => import('../views/generation/GenerationDetailView.vue')
+    },
+    {
+      path: '/data-generation/finetune/:id/edit',
+      name: 'edit-finetune-generation',
+      component: () => import('../views/generation/EditGenerationView.vue')
     }
   ]
 })

@@ -67,15 +67,6 @@
 
           <el-sub-menu index="4">
             <template #title>
-              <el-icon><Monitor /></el-icon>
-              <span>系统管理</span>
-            </template>
-            <el-menu-item index="/users">用户管理</el-menu-item>
-            <el-menu-item index="/settings">系统设置</el-menu-item>
-          </el-sub-menu>
-
-          <el-sub-menu index="4">
-            <template #title>
               <el-icon><Filter /></el-icon>
               <span>数据整理</span>
             </template>
@@ -147,20 +138,21 @@ import {
   flex: 1;
   display: flex;
   overflow: hidden;
-  padding: 12px;
+  padding: 16px;
   box-sizing: border-box;
   position: relative;
-  gap: 12px;
+  gap: 16px;
 }
 
 /* 侧边栏 - 固定宽度 */
 .app-sidebar {
   width: 220px;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 8px;
   flex-shrink: 0;
   overflow-y: auto;
   border: 1px solid #e4e7ed;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
 }
 
 /* 主内容区 - 自适应 */
@@ -168,15 +160,16 @@ import {
   flex: 1;
   overflow: hidden;
   position: relative;
-  background-color: transparent;
   min-width: 0;
 }
 
 .main-container {
   height: 100%;
-  padding: 0;
-  box-sizing: border-box;
   overflow-y: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #e4e7ed;
 }
 
 /* 顶部导航栏组件样式 */

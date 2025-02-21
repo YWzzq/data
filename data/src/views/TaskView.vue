@@ -25,6 +25,13 @@
       </div>
     </div>
 
+    <!-- 步骤引导 -->
+    <StepGuide
+      title="标注任务功能引导"
+      :steps="guideSteps"
+      pageKey="annotation_task"
+    />
+
     <!-- 任务列表 - 表格视图 -->
     <el-card v-if="viewMode === 'table'" class="mt-20">
       <el-table :data="filteredTasks" style="width: 100%">
@@ -188,6 +195,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import StepGuide from '@/components/common/StepGuide.vue'
 
 const router = useRouter()
 
@@ -302,6 +310,80 @@ const deleteTask = (task) => {
       ElMessage.info('已取消删除')
     })
 }
+
+// 引导步骤配置
+const guideSteps = [
+  {
+    title: '创建任务',
+    description: '创建标注任务',
+    icon: 'Plus',
+    content: `
+      <p>创建新的标注任务：</p>
+      <ul>
+        <li>选择数据集</li>
+        <li>设置标注类型（分类、序列标注等）</li>
+        <li>配置标签体系</li>
+        <li>分配标注人员</li>
+      </ul>
+    `
+  },
+  {
+    title: '标注配置',
+    description: '配置标注规则和流程',
+    icon: 'Setting',
+    content: `
+      <p>配置标注任务的具体要求：</p>
+      <ul>
+        <li>设置标注指南</li>
+        <li>配置质量控制规则</li>
+        <li>设置审核流程</li>
+        <li>配置自动化辅助功能</li>
+      </ul>
+    `
+  },
+  {
+    title: '任务分配',
+    description: '分配和管理标注任务',
+    icon: 'User',
+    content: `
+      <p>管理标注任务的分配：</p>
+      <ul>
+        <li>分配标注员</li>
+        <li>设置任务优先级</li>
+        <li>监控任务进度</li>
+        <li>调整任务分配</li>
+      </ul>
+    `
+  },
+  {
+    title: '质量控制',
+    description: '控制标注质量',
+    icon: 'Check',
+    content: `
+      <p>确保标注质量：</p>
+      <ul>
+        <li>实时质量检查</li>
+        <li>标注结果审核</li>
+        <li>标注一致性分析</li>
+        <li>问题反馈和修正</li>
+      </ul>
+    `
+  },
+  {
+    title: '结果导出',
+    description: '导出和应用标注结果',
+    icon: 'Download',
+    content: `
+      <p>处理标注结果：</p>
+      <ul>
+        <li>导出标注数据</li>
+        <li>生成分析报告</li>
+        <li>数据集版本管理</li>
+        <li>结果应用和共享</li>
+      </ul>
+    `
+  }
+]
 </script>
 
 <style scoped>

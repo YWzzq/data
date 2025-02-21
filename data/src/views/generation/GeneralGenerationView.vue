@@ -1,35 +1,54 @@
 <template>
   <div class="general-generation">
-    <!-- 顶部操作栏 -->
-    <div class="action-bar">
-      <div class="left">
-        <el-button type="primary" @click="createGeneration">
-          <el-icon><Plus /></el-icon>新建一般数据生成任务
-        </el-button>
+    <!-- 页面头部 -->
+    <div class="page-header">
+      <div class="header-content">
+        <h2 class="page-title">一般数据生成任务</h2>
       </div>
-      <div class="right">
+      <div class="header-actions">
         <el-input
           v-model="searchQuery"
           placeholder="搜索任务..."
           :prefix-icon="Search"
-          class="search-input mr-2"
+          clearable
+          class="search-input"
         />
+        <el-button type="primary" @click="createGeneration">
+          <el-icon><Plus /></el-icon>新建生成任务
+        </el-button>
       </div>
     </div>
 
+    <!-- 任务统计卡片 -->
+    <el-row :gutter="20" class="stats-row">
+      <el-col :span="6" v-for="(stat, index) in taskStats" :key="index">
+        <el-card class="stats-card" shadow="hover">
+          <div class="stats-content">
+            <el-icon class="stats-icon" :class="stat.type"><component :is="stat.icon" /></el-icon>
+            <div class="stats-info">
+              <div class="stats-number">{{ stat.number }}</div>
+              <div class="stats-title">{{ stat.title }}</div>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+
     <!-- 任务列表 -->
-    <el-card class="mt-20">
+    <el-card class="task-list-card">
       <template #header>
         <div class="card-header">
-          <span>一般数据生成任务列表</span>
-          <el-button-group>
-            <el-button :disabled="!selectedTasks.length" @click="batchDelete">
-              批量删除
-            </el-button>
-            <el-button :disabled="!selectedTasks.length" @click="batchExport">
-              批量导出
-            </el-button>
-          </el-button-group>
+          <span>任务列表</span>
+          <div class="header-actions">
+            <el-button-group>
+              <el-button :disabled="!selectedTasks.length" @click="batchDelete">
+                批量删除
+              </el-button>
+              <el-button :disabled="!selectedTasks.length" @click="batchExport">
+                批量导出
+              </el-button>
+            </el-button-group>
+          </div>
         </div>
       </template>
 
@@ -42,7 +61,7 @@
         <el-table-column prop="name" label="任务名称" min-width="200">
           <template #default="scope">
             <div class="name-cell">
-              <el-icon><MagicStick /></el-icon>
+              <el-icon><Document /></el-icon>
               <span class="clickable" @click="viewTask(scope.row)">
                 {{ scope.row.name }}
               </span>
@@ -51,7 +70,9 @@
         </el-table-column>
         <el-table-column prop="dataType" label="数据类型" width="120">
           <template #default="scope">
-            <el-tag>{{ scope.row.dataType }}</el-tag>
+            <el-tag :type="scope.row.dataType === 'text' ? 'primary' : 'success'">
+              {{ scope.row.dataType === 'text' ? '文本数据' : '图像数据' }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="methods" label="增强方式" min-width="200">
@@ -59,8 +80,8 @@
             <el-tag 
               v-for="method in scope.row.methods" 
               :key="method"
-              class="mr-1"
               size="small"
+              class="method-tag"
             >
               {{ method }}
             </el-tag>
@@ -74,13 +95,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="状态" width="120">
+        <el-table-column prop="status" label="状态" width="100">
           <template #default="scope">
             <el-tag :type="scope.row.status.type">{{ scope.row.status.text }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column label="操作" width="180" fixed="right">
           <template #default="scope">
             <el-button text size="small" @click="viewTask(scope.row)">查看</el-button>
             <el-button text size="small" type="primary" @click="editTask(scope.row)">编辑</el-button>
@@ -110,7 +131,11 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   Plus,
   Search,
-  MagicStick
+  Document,
+  DataLine,
+  Loading,
+  CircleCheck,
+  Warning
 } from '@element-plus/icons-vue'
 
 const router = useRouter()
@@ -124,9 +149,9 @@ const pageSize = ref(10)
 const tasks = ref([
   {
     id: 1,
-    name: '文本数据增强任务-同义词替换',
-    dataType: '文本数据',
-    methods: ['同义词替换', '回译', '句式改写'],
+    name: '新闻文本数据增强',
+    dataType: 'text',
+    methods: ['同义词替换', '回译', 'EDA'],
     progress: 70,
     generated: 700,
     total: 1000,
@@ -135,36 +160,53 @@ const tasks = ref([
   },
   {
     id: 2,
-    name: '图像数据增强任务-基础变换',
-    dataType: '图像数据',
-    methods: ['翻转', '旋转', '缩放', '裁剪'],
+    name: '街景图片数据增强',
+    dataType: 'image',
+    methods: ['翻转', '旋转', '颜色变换'],
     progress: 100,
     generated: 500,
     total: 500,
     status: { type: 'info', text: '已完成' },
-    createTime: '2024-01-03 09:00:00'
+    createTime: '2024-01-02 14:30:00'
   },
   {
     id: 3,
-    name: '文本数据增强任务-EDA',
-    dataType: '文本数据',
-    methods: ['随机插入', '随机删除', '随机交换'],
+    name: '商品评论数据生成',
+    dataType: 'text',
+    methods: ['模板生成', 'EDA'],
     progress: 30,
     generated: 300,
     total: 1000,
     status: { type: 'warning', text: '暂停中' },
-    createTime: '2024-01-05 14:00:00'
+    createTime: '2024-01-03 09:15:00'
+  }
+])
+
+// 任务统计
+const taskStats = ref([
+  {
+    title: '总任务数',
+    number: tasks.value.length,
+    icon: 'DataLine',
+    type: 'primary'
   },
   {
-    id: 4,
-    name: '图像数据增强任务-高级变换',
-    dataType: '图像数据',
-    methods: ['颜色变换', '噪声添加', '模糊处理'],
-    progress: 0,
-    generated: 0,
-    total: 800,
-    status: { type: 'danger', text: '已终止' },
-    createTime: '2024-01-06 16:00:00'
+    title: '进行中',
+    number: tasks.value.filter(t => t.status.text === '进行中').length,
+    icon: 'Loading',
+    type: 'warning'
+  },
+  {
+    title: '已完成',
+    number: tasks.value.filter(t => t.status.text === '已完成').length,
+    icon: 'CircleCheck',
+    type: 'success'
+  },
+  {
+    title: '异常任务',
+    number: tasks.value.filter(t => ['已终止', '暂停中'].includes(t.status.text)).length,
+    icon: 'Warning',
+    type: 'danger'
   }
 ])
 
@@ -249,35 +291,105 @@ const batchExport = () => {
 
 <style scoped>
 .general-generation {
-  padding: 20px;
+  min-height: 100%;
 }
 
-.action-bar {
+.page-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  background-color: #fff;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+}
+
+.header-content {
+  .page-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--el-text-color-primary);
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
   align-items: center;
 }
 
 .search-input {
-  width: 300px;
+  width: 240px;
 }
 
-.mt-20 {
-  margin-top: 20px;
+.stats-row {
+  margin-bottom: 24px;
 }
 
-.mr-1 {
-  margin-right: 4px;
+.stats-card {
+  height: 100%;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
-.mr-2 {
-  margin-right: 8px;
+.stats-content {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.stats-icon {
+  font-size: 32px;
+  margin-right: 16px;
+
+  &.primary {
+    color: var(--el-color-primary);
+  }
+  &.success {
+    color: var(--el-color-success);
+  }
+  &.warning {
+    color: var(--el-color-warning);
+  }
+  &.danger {
+    color: var(--el-color-danger);
+  }
+}
+
+.stats-info {
+  flex: 1;
+}
+
+.stats-number {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stats-title {
+  font-size: 14px;
+  color: var(--el-text-color-secondary);
+}
+
+.task-list-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .name-cell {
@@ -295,6 +407,11 @@ const batchExport = () => {
   }
 }
 
+.method-tag {
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
 .progress-cell {
   display: flex;
   align-items: center;
@@ -310,5 +427,21 @@ const batchExport = () => {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .search-input {
+    width: 180px;
+  }
+
+  .stats-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stats-icon {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
 }
 </style> 
