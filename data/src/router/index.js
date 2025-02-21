@@ -64,26 +64,9 @@ const router = createRouter({
       component: () => import('../views/AnnotationView.vue')
     },
     {
-      path: '/data-generation',
-      name: 'data-generation',
-      component: () => import('../views/DataGenerationView.vue'),
-      children: [
-        {
-          path: '',
-          name: 'data-generation-list',
-          component: () => import('../views/generation/GenerationListView.vue')
-        },
-        {
-          path: 'create',
-          name: 'create-generation',
-          component: () => import('../views/generation/CreateGenerationView.vue')
-        },
-        {
-          path: ':id',
-          name: 'generation-detail',
-          component: () => import('../views/generation/GenerationDetailView.vue')
-        }
-      ]
+      path: '/data-cleaning',
+      name: 'data-cleaning',
+      component: () => import('../views/DataCleaningView.vue')
     }
   ]
 })
