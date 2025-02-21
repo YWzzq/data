@@ -147,6 +147,26 @@ const router = createRouter({
       path: '/data-generation/finetune/:id/edit',
       name: 'edit-finetune-generation',
       component: () => import('../views/generation/EditGenerationView.vue')
+    },
+    {
+      path: '/ai-annotation',
+      name: 'ai-annotation',
+      component: () => import('../views/AIAnnotationView.vue')
+    },
+    {
+      path: '/ai-annotation/create',
+      name: 'create-ai-annotation',
+      component: () => import('../views/CreateAIAnnotationTaskView.vue')
+    },
+    {
+      path: '/ai-annotation/:id',
+      name: 'ai-annotation-detail',
+      component: () => import('../views/AIAnnotationDetailView.vue')
+    },
+    {
+      path: '/ai-annotation/:id/edit',
+      name: 'edit-ai-annotation',
+      component: () => import('../views/EditAIAnnotationTaskView.vue')
     }
   ]
 })

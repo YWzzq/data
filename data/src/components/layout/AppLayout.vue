@@ -53,6 +53,7 @@
               <span>标注任务</span>
             </template>
             <el-menu-item index="/tasks">标注项目</el-menu-item>
+            <el-menu-item index="/ai-annotation">AI标注</el-menu-item>
             <el-menu-item index="/labels">标签管理</el-menu-item>
           </el-sub-menu>
 

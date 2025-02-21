@@ -28,18 +28,6 @@
         <el-radio-button label="文本">
           <el-icon><Document /></el-icon>文本
         </el-radio-button>
-        <el-radio-button label="音频">
-          <el-icon><Headset /></el-icon>音频
-        </el-radio-button>
-        <el-radio-button label="视频">
-          <el-icon><VideoCamera /></el-icon>视频
-        </el-radio-button>
-        <el-radio-button label="表格">
-          <el-icon><Grid /></el-icon>表格
-        </el-radio-button>
-        <el-radio-button label="跨模态">
-          <el-icon><Connection /></el-icon>跨模态
-        </el-radio-button>
       </el-radio-group>
     </el-form-item>
 
@@ -53,19 +41,17 @@
 
     <!-- 标注类型 -->
     <el-form-item label="标注类型" prop="annotationType" required>
-      <div class="annotation-type-grid">
-        <el-card 
+      <el-radio-group v-model="datasetForm.annotationType" class="annotation-type-group">
+        <el-radio-button 
           v-for="type in getAnnotationTypes"
           :key="type.value"
-          :class="['annotation-type-card', { active: datasetForm.annotationType === type.value }]"
-          @click="selectAnnotationType(type.value)"
+          :label="type.value"
+          class="annotation-type-button"
         >
-          <div class="type-icon">
-            <el-icon><component :is="type.icon" /></el-icon>
-          </div>
-          <div class="type-name">{{ type.label }}</div>
-        </el-card>
-      </div>
+          <el-icon><component :is="type.icon" /></el-icon>
+          {{ type.label }}
+        </el-radio-button>
+      </el-radio-group>
     </el-form-item>
 
     <!-- 标注模板 -->
@@ -80,9 +66,8 @@
     <el-form-item label="保存位置" prop="storageType" required>
       <el-radio-group v-model="datasetForm.storageType">
         <el-radio label="local">平台存储</el-radio>
-        <el-radio label="bos">BOS存储</el-radio>
       </el-radio-group>
-      <el-tooltip content="平台存储：数据将存储在平台提供的存储空间中。BOS存储：数据将存储在您的BOS存储空间中。" placement="right">
+      <el-tooltip content="数据将存储在平台提供的存储空间中" placement="right">
         <el-icon class="info-icon"><InfoFilled /></el-icon>
       </el-tooltip>
     </el-form-item>
@@ -94,10 +79,6 @@ import { ref, computed } from 'vue'
 import {
   Picture,
   Document,
-  Headset,
-  VideoCamera,
-  Grid,
-  Connection,
   InfoFilled
 } from '@element-plus/icons-vue'
 
@@ -157,22 +138,6 @@ const getAnnotationTypes = computed(() => {
       { label: '文本分类', value: 'text_classification', icon: 'Document' },
       { label: '序列标注', value: 'sequence_labeling', icon: 'Collection' },
       { label: '文本匹配', value: 'text_matching', icon: 'Connection' }
-    ],
-    '音频': [
-      { label: '语音识别', value: 'speech_recognition', icon: 'Microphone' },
-      { label: '声音分类', value: 'audio_classification', icon: 'Headset' }
-    ],
-    '视频': [
-      { label: '视频分类', value: 'video_classification', icon: 'VideoCamera' },
-      { label: '目标跟踪', value: 'object_tracking', icon: 'Aim' }
-    ],
-    '表格': [
-      { label: '单元格标注', value: 'cell_annotation', icon: 'Grid' },
-      { label: '行列标注', value: 'row_col_annotation', icon: 'Operation' }
-    ],
-    '跨模态': [
-      { label: '图文匹配', value: 'image_text_matching', icon: 'Connection' },
-      { label: '视频描述', value: 'video_caption', icon: 'ChatLineRound' }
     ]
   }
   return types[datasetForm.value.dataType] || []
@@ -210,37 +175,24 @@ defineExpose({
   padding: 12px 20px;
 }
 
-.annotation-type-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+.annotation-type-group {
+  display: flex;
   gap: 12px;
-  margin-top: 8px;
+  flex-wrap: wrap;
 }
 
-.annotation-type-card {
-  cursor: pointer;
-  text-align: center;
-  padding: 16px;
-  transition: all 0.3s;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+.annotation-type-button {
+  :deep(.el-radio-button__inner) {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 20px;
+    min-width: 120px;
+    justify-content: center;
   }
 
-  &.active {
-    border-color: var(--el-color-primary);
-    background-color: var(--el-color-primary-light-9);
-  }
-
-  .type-icon {
-    font-size: 24px;
-    margin-bottom: 8px;
-    color: var(--el-color-primary);
-  }
-
-  .type-name {
-    font-size: 14px;
+  .el-icon {
+    font-size: 16px;
   }
 }
 
@@ -255,5 +207,10 @@ defineExpose({
   color: var(--el-text-color-secondary);
   margin-top: 4px;
   line-height: 1.4;
+}
+
+.annotation-type-grid,
+.annotation-type-card {
+  display: none;
 }
 </style> 
