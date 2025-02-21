@@ -20,8 +20,8 @@
 
           <el-form-item label="清洗方案">
             <el-radio-group v-model="cleaningPlan">
-              <el-radio label="standard">通用清洗方案</el-radio>
-              <el-radio label="custom">定制清洗方案</el-radio>
+              <el-radio label="standard">通用方案</el-radio>
+              <el-radio label="custom">定制方案</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -37,10 +37,17 @@
 
           <el-form-item v-if="cleaningPlan === 'custom'">
             <h3>选择模型</h3>
-            <el-radio-group v-model="modelType">
-              <el-radio label="local">导入本地模型</el-radio>
-              <el-radio label="online">在线模型选择</el-radio>
-            </el-radio-group>
+            <el-form-item label="导入本地模型">
+              <el-upload action="/upload" :on-success="handleUploadSuccess">
+                <el-button>点击上传</el-button>
+              </el-upload>
+            </el-form-item>
+            <el-form-item label="在线模型选择">
+              <el-select v-model="onlineModel" placeholder="请选择模型">
+                <el-option label="模型1" value="model1"></el-option>
+                <el-option label="模型2" value="model2"></el-option>
+              </el-select>
+            </el-form-item>
           </el-form-item>
 
           <el-form-item>
@@ -85,10 +92,17 @@
 
           <el-form-item v-if="cleaningPlan === 'custom'">
             <h3>选择模型</h3>
-            <el-radio-group v-model="modelType">
-              <el-radio label="local">导入本地模型</el-radio>
-              <el-radio label="online">在线模型选择</el-radio>
-            </el-radio-group>
+            <el-form-item label="导入本地模型">
+              <el-upload action="/upload" :on-success="handleUploadSuccess">
+                <el-button>点击上传</el-button>
+              </el-upload>
+            </el-form-item>
+            <el-form-item label="在线模型选择">
+              <el-select v-model="onlineModel" placeholder="请选择模型">
+                <el-option label="模型1" value="model1"></el-option>
+                <el-option label="模型2" value="model2"></el-option>
+              </el-select>
+            </el-form-item>
           </el-form-item>
 
           <el-form-item>
@@ -112,6 +126,10 @@ const cleaningPlan = ref('standard')
 const textCleaningOptions = ref([])
 const imageCleaningOptions = ref([])
 const modelType = ref('local')
+const onlineModel = ref('')
+const handleUploadSuccess = (response, file, fileList) => {
+  console.log('Upload success:', response)
+}
 </script>
 
 <style scoped>

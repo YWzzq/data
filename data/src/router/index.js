@@ -72,7 +72,8 @@ const router = createRouter({
       path: '/data-cleaning/new-task',
       name: 'new-data-cleaning-task',
       component: () => import('../views/NewDataCleaningTaskView.vue')},
-      {path: '/about',
+    {
+      path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
     },
