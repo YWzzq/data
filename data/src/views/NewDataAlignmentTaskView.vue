@@ -13,10 +13,10 @@
   
         <el-form-item label="对齐方案">
           <el-radio-group v-model="alignmentPlan">
-            <el-radio label="standard">通用对齐方案</el-radio>
-            <el-radio label="custom">定制对齐方案</el-radio>
+            <el-radio label="standard">通用方案</el-radio>
+            <el-radio label="custom">定制方案</el-radio>
           </el-radio-group>
-          <small>选择适合的对齐方案。</small>
+      
         </el-form-item>
   
         <el-form-item v-if="alignmentPlan === 'standard'">
@@ -25,7 +25,22 @@
             <el-checkbox label="自动对齐">自动对齐</el-checkbox>
             <el-checkbox label="手动调整">手动调整</el-checkbox>
           </el-checkbox-group>
-          <small>选择对齐选项以优化数据处理。</small>
+          
+        </el-form-item>
+  
+        <el-form-item v-if="alignmentPlan === 'custom'">
+          <h3>选择模型</h3>
+          <el-form-item label="导入本地模型">
+            <el-upload action="/upload" :on-success="handleUploadSuccess">
+              <el-button>点击上传</el-button>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="在线模型选择">
+            <el-select v-model="onlineModel" placeholder="请选择模型">
+              <el-option label="模型1" value="model1"></el-option>
+              <el-option label="模型2" value="model2"></el-option>
+            </el-select>
+          </el-form-item>
         </el-form-item>
   
         <el-form-item>
@@ -43,6 +58,10 @@
   const selectedDataset = ref('')
   const alignmentPlan = ref('standard')
   const alignmentOptions = ref([])
+  const onlineModel = ref('')
+  const handleUploadSuccess = (response, file, fileList) => {
+    console.log('Upload success:', response)
+  }
   </script>
   
   <style scoped>
