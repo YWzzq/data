@@ -61,8 +61,8 @@
               <el-icon><MagicStick /></el-icon>
               <span>数据合成</span>
             </template>
-            <el-menu-item index="/data-generation">生成任务</el-menu-item>
-            <el-menu-item index="/data-generation/create">创建任务</el-menu-item>
+            <el-menu-item index="/data-generation/general">一般数据生成</el-menu-item>
+            <el-menu-item index="/data-generation/finetune">大模型微调数据</el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="4">
