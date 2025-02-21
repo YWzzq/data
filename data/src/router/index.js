@@ -71,7 +71,38 @@ const router = createRouter({
     {
       path: '/data-cleaning/new-task',
       name: 'new-data-cleaning-task',
-      component: () => import('../views/NewDataCleaningTaskView.vue')},
+      component: () => import('../views/NewDataCleaningTaskView.vue')
+    },
+    {
+      path: '/data-alignment',
+      name: 'data-alignment',
+      component: () => import('../views/DataAlignmentView.vue')
+    },
+    {
+      path: '/data-alignment/new-task',
+      name: 'new-data-alignment-task',
+      component: () => import('../views/NewDataAlignmentTaskView.vue')
+    },
+    {
+      path: '/data-deduplication',
+      name: 'data-deduplication',
+      component: () => import('../views/DataDeduplicationView.vue')
+    },
+    {
+      path: '/data-deduplication/new-task',
+      name: 'new-data-deduplication-task',
+      component: () => import('../views/NewDataDeduplicationTaskView.vue')
+    },
+    {
+      path: '/data-disambiguation',
+      name: 'data-disambiguation',
+      component: () => import('../views/DataDisambiguationView.vue')
+    },
+    {
+      path: '/data-disambiguation/new-task',
+      name: 'new-data-disambiguation-task',
+      component: () => import('../views/NewDataDisambiguationTaskView.vue')
+    },
     {
       path: '/about',
       name: 'about',

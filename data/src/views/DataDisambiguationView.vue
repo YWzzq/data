@@ -35,7 +35,7 @@ const taskList = ref([
 const router = useRouter()
 
 const createNewTask = () => {
-  router.push('/data-disambiguation/new-data-disambiguation-task')
+  router.push('/data-disambiguation/new-task')
 }
 </script>
 

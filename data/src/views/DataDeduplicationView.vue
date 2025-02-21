@@ -35,7 +35,7 @@ const taskList = ref([
 const router = useRouter()
 
 const createNewTask = () => {
-  router.push('/data-deduplication/new-data-deduplication-task')
+  router.push('/data-deduplication/new-task')
 }
 </script>
 

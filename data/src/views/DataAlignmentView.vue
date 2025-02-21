@@ -35,7 +35,7 @@ const taskList = ref([
 const router = useRouter()
 
 const createNewTask = () => {
-  router.push('/data-alignment/new-data-alignment-task')
+  router.push('/data-alignment/new-task')
 }
 </script>
 
