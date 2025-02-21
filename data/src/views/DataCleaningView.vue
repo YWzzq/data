@@ -1,72 +1,49 @@
 <template>
   <div class="data-cleaning-page">
-    <h1>新建清洗任务</h1>
-    <el-form>
-      <el-form-item label="清洗类型">
-        <el-radio-group v-model="cleaningType">
-          <el-radio label="image">图片数据集清洗</el-radio>
-          <el-radio label="text">文本数据集清洗</el-radio>
-        </el-radio-group>
-      </el-form-item>
+    <h1>数据清洗</h1>
+    <el-card>
+      <p>您可以使用平台提供的数据清洗功能对图像数据集和文本数据集进行清洗。完成数据清洗后，可提升数据质量，方便进行下一步的数据标注等操作。</p>
+      <p>1、可以对数据集中的图片进行去模糊、去近似、批量旋转、批量镜像等多种基础清洗服务。</p>
+      <p>2、可以对文本数据进行去emoji，去url和繁体转简体的操作。</p>
+      <p>3、可以定制清洗方案通过选择在线模型或导入本地模型进行数据清洗。</p>
+    </el-card>
 
-      <el-form-item label="清洗后">
-        <el-select v-model="selectedDataset" placeholder="请选择数据集">
-          <el-option label="数据集1" value="dataset1"></el-option>
-          <el-option label="数据集2" value="dataset2"></el-option>
-        </el-select>
-      </el-form-item>
+    <el-card>
+      <el-table :data="taskList" style="width: 100%">
+        <el-table-column prop="name" label="任务名称" />
+        <el-table-column prop="status" label="状态" />
+        <el-table-column prop="progress" label="进度">
+          <template #default="scope">
+            <el-progress :percentage="scope.row.progress" />
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
-      <el-form-item label="清洗方案">
-        <el-radio-group v-model="cleaningPlan">
-          <el-radio label="standard">通用清洗方案</el-radio>
-          <el-radio label="advanced">高级清洗方案</el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item v-if="cleaningType === 'image'">
-        <h3>图片清洗选项</h3>
-        <el-checkbox-group v-model="imageCleaningOptions">
-          <el-checkbox label="去重">去重</el-checkbox>
-          <el-checkbox label="去模糊">去模糊</el-checkbox>
-          <el-checkbox label="去噪声">去噪声</el-checkbox>
-          <el-checkbox label="调整亮度">调整亮度</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-
-      <el-form-item v-if="cleaningType === 'text'">
-        <h3>文本清洗选项</h3>
-        <el-checkbox-group v-model="textCleaningOptions">
-          <el-checkbox label="去除特殊字符">去除特殊字符</el-checkbox>
-          <el-checkbox label="去除emoji">去除emoji</el-checkbox>
-          <el-checkbox label="去除url">去除url</el-checkbox>
-          <el-checkbox label="繁体转简体">繁体转简体</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary">提交</el-button>
-        <el-button>返回</el-button>
-      </el-form-item>
-    </el-form>
+    <el-button type="primary" @click="createNewTask">新建任务</el-button>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { ElCheckbox, ElCheckboxGroup, ElRadio, ElRadioGroup, ElSelect, ElOption, ElForm, ElFormItem, ElButton } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { ElCard, ElTable, ElTableColumn, ElProgress, ElButton } from 'element-plus'
 
-const cleaningType = ref('image')
-const selectedDataset = ref('')
-const cleaningPlan = ref('standard')
-const textCleaningOptions = ref([])
-const imageCleaningOptions = ref([])
+const taskList = ref([
+  { name: '任务1', status: '进行中', progress: 50 },
+  { name: '任务2', status: '已完成', progress: 100 },
+  { name: '任务3', status: '待处理', progress: 0 }
+])
+
+const router = useRouter()
+
+const createNewTask = () => {
+  router.push('/data-cleaning/new-task')
+}
 </script>
 
 <style scoped>
 .data-cleaning-page {
   padding: 20px;
 }
-.cleaning-options {
-  margin-top: 20px;
-}
-</style> 
+</style>

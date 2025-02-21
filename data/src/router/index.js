@@ -69,6 +69,11 @@ const router = createRouter({
       component: () => import('../views/DataCleaningView.vue')
     },
     {
+      path: '/data-cleaning/new-task',
+      name: 'new-data-cleaning-task',
+      component: () => import('../views/NewDataCleaningTaskView.vue')
+    },
+    {
       path: '/data-generation',
       name: 'data-generation',
       component: () => import('../views/DataGenerationView.vue'),
