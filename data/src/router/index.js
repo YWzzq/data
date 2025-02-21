@@ -62,6 +62,11 @@ const router = createRouter({
       path: '/annotation',
       name: 'annotation',
       component: () => import('../views/AnnotationView.vue')
+    },
+    {
+      path: '/data-cleaning',
+      name: 'data-cleaning',
+      component: () => import('../views/DataCleaningView.vue')
     }
   ]
 })

@@ -64,6 +64,17 @@
             <el-menu-item index="/users">用户管理</el-menu-item>
             <el-menu-item index="/settings">系统设置</el-menu-item>
           </el-sub-menu>
+
+          <el-sub-menu index="4">
+            <template #title>
+              <el-icon><Filter /></el-icon>
+              <span>数据整理</span>
+            </template>
+            <el-menu-item index="/data-cleaning">数据清洗</el-menu-item>
+            <el-menu-item index="/data-alignment">数据对齐</el-menu-item>
+            <el-menu-item index="/data-deduplication">数据去重</el-menu-item>
+            <el-menu-item index="/data-disambiguation">数据消歧</el-menu-item>
+          </el-sub-menu>
         </el-menu>
       </aside>
 
