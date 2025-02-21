@@ -12,11 +12,11 @@
       <div class="header-right">
         <el-input
           placeholder="搜索..."
-          prefix-icon="Search"
+          :prefix-icon="Search"
           class="search-input"
         />
-        <el-button icon="Bell" circle />
-        <el-button icon="QuestionFilled" circle />
+        <el-button :icon="Bell" circle />
+        <el-button :icon="QuestionFilled" circle />
         <el-dropdown>
           <el-avatar size="small">用户</el-avatar>
           <template #dropdown>
@@ -58,6 +58,15 @@
 
           <el-sub-menu index="3">
             <template #title>
+              <el-icon><MagicStick /></el-icon>
+              <span>数据合成</span>
+            </template>
+            <el-menu-item index="/data-generation">生成任务</el-menu-item>
+            <el-menu-item index="/data-generation/create">创建任务</el-menu-item>
+          </el-sub-menu>
+
+          <el-sub-menu index="4">
+            <template #title>
               <el-icon><Monitor /></el-icon>
               <span>系统管理</span>
             </template>
@@ -79,6 +88,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import { 
+  Document, 
+  Edit, 
+  Monitor, 
+  MagicStick, 
+  Search, 
+  Bell, 
+  QuestionFilled 
+} from '@element-plus/icons-vue'
 </script>
 
 <style scoped>
